@@ -71,7 +71,8 @@ Description: What this column represents
 Sample Values: 3-5 realistic example values
 Constraints: Any relevant constraints (range, format, required/optional)
 Maximum number of columns:8
-Manimum number of columns 2
+Minimum number of columns 
+****Don't Exceed than the written number of columns***
 
 Data quality recommendations
 Potential data relationships to consider
