@@ -85,7 +85,7 @@ def model():
     api_key=api_key,
     )
     stream_response = client.chat.completions.create(
-    model="meta-llama/llama-3.3-8b-instruct:free",
+    model="meta-llama/llama-4-maverick:free",
     messages=[
         {"role":"system", "content":system}, {"role":"user", "content":question},
     ]
