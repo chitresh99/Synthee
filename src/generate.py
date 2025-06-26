@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from refine import model
 from system_prompts.dataset_config import dataset_config_prompt
+from logger import logger
 
 load_dotenv()
 deep_seek_api = os.getenv('deep_seek_api')
