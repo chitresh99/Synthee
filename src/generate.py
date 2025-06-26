@@ -17,7 +17,6 @@ refined_prompt = model()
 if not refined_prompt:
     raise ValueError("refined_prompt is empty or None")
 
-# Updated system prompt to be more explicit about 1000 rows
 system = """Generate a complete CSV dataset based on the following prompt.
 
 CRITICAL REQUIREMENTS:
@@ -47,8 +46,10 @@ def generate_multiple_batches():
         print(f"Generating batch {batch_num + 1}/{total_batches}...")
         
         batch_system = f"""Generate exactly {batch_size} rows of CSV data based on the prompt.
-{'Include headers in the first row.' if batch_num == 0 else 'Do NOT include headers, only data rows.'}
-Return pure CSV format with no explanatory text."""
+        {'Include headers in the first row.' 
+        if batch_num == 0 
+        else 'Do NOT include headers, only data rows.'}
+        Return pure CSV format with no explanatory text."""
         
         try:
             completion = client.chat.completions.create(
