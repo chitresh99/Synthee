@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from openai import OpenAI
 from refine import model
+from system_prompts.dataset_config import dataset_config_prompt
 
 load_dotenv()
 deep_seek_api = os.getenv('deep_seek_api')
@@ -17,18 +18,7 @@ refined_prompt = model()
 if not refined_prompt:
     raise ValueError("refined_prompt is empty or None")
 
-system = """Generate a complete CSV dataset based on the following prompt.
-
-CRITICAL REQUIREMENTS:
-- Generate EXACTLY 1000 rows of data (not including header)
-- Maximum number of columns: 8
-- Minimum number of columns: 1
-- Return ONLY the CSV data with headers
-- Do NOT include any explanatory text, notes, or truncation messages
-- Do NOT use placeholders like "... [Additional rows]..."
-- Generate realistic, varied data for all 1000 rows
-
-Output Format: Pure CSV data starting with headers, followed by exactly 1000 data rows."""
+system = dataset_config_prompt()
 
 def generate_multiple_batches():
     """Generate dataset in multiple smaller batches and combine"""
