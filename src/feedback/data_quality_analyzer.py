@@ -3,7 +3,6 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
-
 class DataQualityAnalyzer:
     def __init__(self, csv_file_path):
         self.csv_file_path = csv_file_path

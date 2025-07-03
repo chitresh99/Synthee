@@ -24,13 +24,8 @@ class FeedbackGenerator:
 
         Key Issues Found:
         {self._format_recommendations()}
-
-        Based on this analysis, please provide:
-        1. Specific feedback on data quality issues
-        2. Suggestions for improving the synthetic data generation
-        3. Recommendations for the next iteration of the dataset
-        4. Assessment of whether the dataset meets requirements for its intended use case
         """
+
         return prompt
     
     def _format_column_info(self):

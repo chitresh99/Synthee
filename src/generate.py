@@ -4,25 +4,51 @@ import random
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from openai import OpenAI
-from refine import model
-from system_prompts.dataset_config import dataset_config_prompt
-from logger import logger
+import streamlit as st
 
 load_dotenv()
-deep_seek_api = os.getenv('deep_seek_api')
 
-if not deep_seek_api:
-    raise ValueError("API key 'deep_seek_api' not found in environment variables")
+try:
+    from refine import model
+    refine_available = True
+except ImportError:
+    refine_available = False
 
-refined_prompt = model()
+try:
+    from system_prompts.dataset_config import dataset_config_prompt
+    config_available = True
+except ImportError:
+    config_available = False
 
-if not refined_prompt:
-    raise ValueError("refined_prompt is empty or None")
+try:
+    from logger import logger
+    logger_available = True
+except ImportError:
+    logger_available = False
 
-system = dataset_config_prompt()
-
-def generate_multiple_batches():
+def generate_multiple_batches(user_prompt):
     """Generate dataset in multiple smaller batches and combine"""
+    deep_seek_api = os.getenv('deep_seek_api')
+    if not deep_seek_api:
+        st.error("API key 'deep_seek_api' not found in environment variables")
+        return None
+    
+    try:
+        if refine_available:
+            refined_prompt = model(user_prompt)
+            if not refined_prompt:
+                st.error("refined_prompt is empty or None")
+                return None
+        else:
+            refined_prompt = user_prompt
+            
+        if logger_available:
+            logger.info(f"Using refined prompt: {refined_prompt}")
+            
+    except Exception as e:
+        st.error(f"Error generating refined prompt: {e}")
+        return None
+    
     all_rows = []
     headers = None
     batch_size = 200
@@ -33,8 +59,12 @@ def generate_multiple_batches():
         api_key=deep_seek_api,
     )
     
+    progress_bar = st.progress(0)
+    status_text = st.empty()
+    
     for batch_num in range(total_batches):
-        print(f"Generating batch {batch_num + 1}/{total_batches}...")
+        status_text.text(f"Generating batch {batch_num + 1}/{total_batches}...")
+        progress_bar.progress((batch_num + 1) / total_batches)
         
         batch_system = f"""Generate exactly {batch_size} rows of CSV data based on the prompt.
         {'Include headers in the first row.' 
@@ -69,21 +99,14 @@ def generate_multiple_batches():
                 all_rows.extend(batch_lines)
                 
         except Exception as e:
-            print(f"Error generating batch {batch_num + 1}: {e}")
+            st.error(f"Error generating batch {batch_num + 1}: {e}")
             continue
+    
+    status_text.text("Dataset generation complete!")
     
     if all_rows:
         final_csv = '\n'.join(all_rows)
-        print(f"\nFinal dataset generated with {len(all_rows)-1} rows")
-        print(final_csv)
-        with open('generated_dataset_batched.csv', 'w', newline='') as f:
-            f.write(final_csv)
-        print("\nDataset saved to 'generated_dataset_batched.csv'")
-        
+        st.success(f"Final dataset generated with {len(all_rows)-1} rows")
         return final_csv
     
     return None
-
-if __name__ == "__main__":
-    print("\n Generating data set \n")
-    result = generate_multiple_batches()
