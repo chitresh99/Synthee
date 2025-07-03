@@ -34,4 +34,4 @@ Backend: Python
 
 AI Model Access: OpenRouter (routes to models like Meta LLaMA, DeepSeek, etc.)
 
-Models Used: Meta LLaMA, DeepSeek, Mistral
+Models Used: Meta LLaMA, DeepSeek
