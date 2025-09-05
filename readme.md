@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 Features
+## Features
 
 - 🧠 **AI-Powered Prompt Generation** – Generate contextually accurate data from natural language prompts.
 - 🔧 **Custom Schema Support** – Define your own fields, types, and constraints.
@@ -13,20 +13,20 @@
 
 ---
 
-## 🛠️ How It Works
+## How It Works
 
 1. Input a prompt describing the kind of dataset you want.
 2. Optionally define a schema and constraints.
 3. Synthee uses AI to generate data based on the prompt and your preferences.
 4. Download the dataset as a CSV file or preview it in-browser.
 
-## 🧪 Example Use Cases
+## Example Use Cases
 
 - Generate tabular synthetic datasets for machine learning prototyping.
 - Simulate customer data for frontend or backend testing.
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 Frontend: Streamlit
 
