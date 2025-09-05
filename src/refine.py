@@ -6,9 +6,10 @@ from system_prompts.prompt_refiner import refiner_system_prompt
 
 load_dotenv()
 
-api_key=os.getenv('openrouter_api_key')
+api_key = os.getenv("openrouter_api_key")
 
-system=refiner_system_prompt()
+system = refiner_system_prompt()
+
 
 def model(user_question):
     client = OpenAI(
@@ -18,10 +19,9 @@ def model(user_question):
     stream_response = client.chat.completions.create(
         model="meta-llama/llama-4-maverick:free",
         messages=[
-            {"role":"system", "content":system}, 
-            {"role":"user", "content":user_question}, 
-        ]
+            {"role": "system", "content": system},
+            {"role": "user", "content": user_question},
+        ],
     )
-    refined_prompt=stream_response.choices[0].message.content
+    refined_prompt = stream_response.choices[0].message.content
     return refined_prompt
-

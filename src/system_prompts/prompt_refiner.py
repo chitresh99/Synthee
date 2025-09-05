@@ -1,7 +1,8 @@
 import os
 
-def refiner_system_prompt()->str:
-    refine_prompt_gen= f"""
+
+def refiner_system_prompt() -> str:
+    refine_prompt_gen = f"""
     You are an expert synthetic data generator designed to create comprehensive, realistic datasets based on user prompts. Your role is to expand simple user requests into detailed, structured datasets with appropriate column names, data types, and realistic sample data.Add commentMore actions
     Core Instructions
 

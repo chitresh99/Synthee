@@ -1,12 +1,12 @@
 class FeedbackGenerator:
     def __init__(self, analysis_results):
         self.results = analysis_results
-    
+
     def generate_feedback_prompt(self):
-        basic_info = self.results['basic_info']
-        quality_scores = self.results['quality_scores']
-        quality_assessment = self.results['quality_assessment']
-        
+        basic_info = self.results["basic_info"]
+        quality_scores = self.results["quality_scores"]
+        quality_assessment = self.results["quality_assessment"]
+
         prompt = f"""
         SYNTHETIC DATASET QUALITY ANALYSIS REPORT
 
@@ -27,16 +27,25 @@ class FeedbackGenerator:
         """
 
         return prompt
-    
+
     def _format_column_info(self):
-        return "\n".join([f"{col}: {info['dtype']}" for col, info in self.results['column_info'].items()])
-    
+        return "\n".join(
+            [
+                f"{col}: {info['dtype']}"
+                for col, info in self.results["column_info"].items()
+            ]
+        )
+
     def _format_recommendations(self):
-        recommendations = self.results['recommendations']
-        return "\n".join([f"- {rec}" for rec in recommendations]) if recommendations else "No major issues detected"
-    
-    def save_feedback_prompt(self, filename='eda_feedback_prompt.txt'):
+        recommendations = self.results["recommendations"]
+        return (
+            "\n".join([f"- {rec}" for rec in recommendations])
+            if recommendations
+            else "No major issues detected"
+        )
+
+    def save_feedback_prompt(self, filename="eda_feedback_prompt.txt"):
         prompt = self.generate_feedback_prompt()
-        with open(filename, 'w') as f:
+        with open(filename, "w") as f:
             f.write(prompt)
         return filename
