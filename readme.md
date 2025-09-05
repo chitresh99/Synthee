@@ -6,10 +6,10 @@
 
 ## Features
 
-- 🧠 **AI-Powered Prompt Generation** – Generate contextually accurate data from natural language prompts.
-- 🔧 **Custom Schema Support** – Define your own fields, types, and constraints.
-- 🖥️ **Streamlit UI** – Easy-to-use frontend for quick testing and dataset generation.
-- 📦 **Export to CSV** – Download your datasets for instant use in ML or analytics pipelines.
+- **AI-Powered Prompt Generation** – Generate contextually accurate data from natural language prompts.
+- **Custom Schema Support** – Define your own fields, types, and constraints.
+- **Streamlit UI** – Easy-to-use frontend for quick testing and dataset generation.
+- **Export to CSV** – Download your datasets for instant use in ML or analytics pipelines.
 
 ---
 
